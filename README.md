@@ -7,8 +7,7 @@ A RESTful API for managing personal financial records. Users can record their in
 
 1. Clone the repository
    ```bash
-   git clone <repository-url>
-   cd personal-expense-tracker
+   git clone https://github.com/manojkumar9786/expense-tracker.git
 
 2. Install dependencies
 
