@@ -14,6 +14,31 @@ router.post('/', async (req, res) => {
     }
 });
 
+// Get summary of transactions
+router.get('/summary', async (req, res) => {
+    try {
+        const transactions = await Transaction.find();
+        const summary = {
+            totalIncome: transactions
+                .filter(t => t.type === 'income')
+                .reduce((acc, curr) => acc + curr.amount, 0),
+            totalExpenses: transactions
+                .filter(t => t.type === 'expense')
+                .reduce((acc, curr) => acc + curr.amount, 0),
+            balance: transactions
+                .filter(t => t.type === 'income')
+                .reduce((acc, curr) => acc + curr.amount, 0) -
+                transactions
+                .filter(t => t.type === 'expense')
+                .reduce((acc, curr) => acc + curr.amount, 0),
+        };
+        res.json(summary);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
 // Get all transactions
 router.get('/', async (req, res) => {
     try {
@@ -57,28 +82,5 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-// Get summary of transactions
-router.get('/summary', async (req, res) => {
-    try {
-        const transactions = await Transaction.find();
-        const summary = {
-            totalIncome: transactions
-                .filter(t => t.type === 'income')
-                .reduce((acc, curr) => acc + curr.amount, 0),
-            totalExpenses: transactions
-                .filter(t => t.type === 'expense')
-                .reduce((acc, curr) => acc + curr.amount, 0),
-            balance: transactions
-                .filter(t => t.type === 'income')
-                .reduce((acc, curr) => acc + curr.amount, 0) -
-                transactions
-                .filter(t => t.type === 'expense')
-                .reduce((acc, curr) => acc + curr.amount, 0),
-        };
-        res.json(summary);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
 
 module.exports = router;

@@ -60,7 +60,6 @@ Categories :
 
      - Retrieve all categories
 
+Screenshot:
 
-Screenshots:
-
-(./screenshots/)
+ - Scrooshots upload in screenshots folder.
